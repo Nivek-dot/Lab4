@@ -39,8 +39,13 @@ def fetch_task_by_id_v1(task_id: int):
 
 
 @app.post("/api/v1/tasks/", status_code=201)
-def create_task_v1(title: str, description: str):
-    new_task = {"id": len(tasks_data_v1) + 1, "title": title, "description": description, "completed": False}
+def create_task_v1(task: Task):
+    new_task = {
+        "id": len(tasks_data_v1) + 1,
+        "title": task.title,
+        "description": task.description,
+        "completed": False
+    }
     tasks_data_v1.append(new_task)
     return {"status": "success", "data": new_task}
 
