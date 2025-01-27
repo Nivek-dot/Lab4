@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Depends, Request
 from dotenv import load_dotenv
+from pydantic import BaseModel
 import os
 
 # Load environment variables
@@ -37,7 +38,10 @@ def fetch_task_by_id_v1(task_id: int):
         raise HTTPException(status_code=404, detail="Task not found")
     return {"status": "success", "data": task}
 
-
+class Task(BaseModel):
+    title: str
+    description: str
+    
 @app.post("/api/v1/tasks/", status_code=201)
 def create_task_v1(task: Task):
     new_task = {
